@@ -50,7 +50,7 @@ void CmdLineExec::executeSend(Ris::CmdLineCmd* aCmd)
    char tString[100];
    if (aCmd->numArg() == 0)
    {
-      strcpy(tString, "ABCD");
+      strcpy(tString, "ADDR");
    }
    else
    {
