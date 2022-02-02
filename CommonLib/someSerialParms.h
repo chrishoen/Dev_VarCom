@@ -1,6 +1,7 @@
 #pragma once
 
 /*==============================================================================
+Prototype communications message classes.
 Parameters class whose values are read from a command file. 
 ==============================================================================*/
 
@@ -46,7 +47,7 @@ namespace Some
 // structure. If so, then this class is the root.
 // 
 
-class ExampleParms : public Ris::BaseCmdLineParms
+class SerialParms : public Ris::BaseCmdLineParms
 {
 public:
 
@@ -55,29 +56,37 @@ public:
    //***************************************************************************
    // Constants.
 
-   static const int cMaxStringSize = 100;
+   static const int cMaxStringSize = 64;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Members.
+   // Members. Read from the parameters file.
 
-   // Main thread timer period.
-   int mTimerPeriod;
+   // Serial port setup.
+   char mSerialPortDevice[cMaxStringSize];
+   char mSerialPortSetup[cMaxStringSize];
+   int  mSerialRxTimeout;
 
-   // Delays.
-   int mDelay1;
+   // Serial string port termination modes.
+   int mTxTermMode;
+   int mRxTermMode;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Members.
+   // Members. Read from the parameters file.
 
-   // If true then enable print view and initialize it with the
-   // given ip address. Print view routes debug prints from the
-   // backend threads to print view consoles on a host.
-   bool mPrintViewEnable;
-   char mPrintViewIPAddress[30];
+   // Message thread timer period.
+   int mThreadTimerPeriod;
+
+   // Echo message number of words.
+   int mNumWords;
+
+   // Transfer mode variables.
+   bool mReadAllFlag;
+   bool mWriteAllFlag;
+   int mRxReqNumBytes;
 
    //***************************************************************************
    //***************************************************************************
@@ -91,7 +100,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
-   ExampleParms();
+   SerialParms();
    void reset();
    void show();
 
@@ -110,10 +119,10 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef       _SOMEEXAMPLEPARMS_CPP_
-   ExampleParms gExampleParms;
+#ifdef _SOMESERIALPARMS_CPP_
+   SerialParms gSerialParms;
 #else
-   extern ExampleParms gExampleParms;
+   extern SerialParms gSerialParms;
 #endif
 
 //******************************************************************************

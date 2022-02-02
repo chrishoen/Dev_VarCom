@@ -7,24 +7,20 @@ include(MyLocalImports.cmake)
 include(MyPrecompiledHeader.cmake)
 include(MySpecial.cmake)
 
-project ("Dev_Example")
+project ("Dev_VarCom")
 my_special1() 
 
-add_subdirectory ("CommonLib")
-add_subdirectory ("ExampleThread1")
-add_subdirectory ("ExampleThread2")
-add_subdirectory ("ExampleThread3")
-add_subdirectory ("ProtoTcpClient")
-add_subdirectory ("ProtoTcpServer")
-add_subdirectory ("ProtoUdp")
 add_subdirectory ("Test")
 return()
 
 add_subdirectory ("CommonLib")
-add_subdirectory ("ExampleThread1")
-return()
-
-
+add_subdirectory ("SerialTest3")
 add_subdirectory ("Test")
 return()
+
+add_subdirectory ("CommonLib")
+add_subdirectory ("Test")
+return()
+
+
 

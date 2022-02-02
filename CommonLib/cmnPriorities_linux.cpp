@@ -21,10 +21,12 @@ namespace Cmn
 
 Priorities::Priorities()
 {
-   mTimer         = Ris::Threads::Priority(-1, 70);
-   mQCall         = Ris::Threads::Priority(-1, 70);
-   mLong          = Ris::Threads::Priority(-1, 60);
-   mShort         = Ris::Threads::Priority(-1, 70);
+   mTsPrint           = Ris::Threads::Priority(-1, 20);
+   mMasterLong        = Ris::Threads::Priority(-1, 50);
+   mMasterShort       = Ris::Threads::Priority(-1, 80);
+   mSlave             = Ris::Threads::Priority(-1, 60);
+   mTimer             = Ris::Threads::Priority(-1, 82);
+   mTest              = Ris::Threads::Priority(-1, 60);
 }
 
 //******************************************************************************
