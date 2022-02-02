@@ -13,10 +13,10 @@ my_lib_import_CommonLib(${project})
 my_lib_import_RisLib(${project})
 
 if (MSVC)
-   install(TARGETS ${Project} DESTINATION "C:/aaa_prime/VarCom")
+   install(TARGETS ${project} DESTINATION "C:/aaa_prime/VarCom")
 elseif (MYMODE STREQUAL ubuntu OR MYMODE STREQUAL wsl) 
-   install(TARGETS ${Project} DESTINATION "/opt/prime/bin")
+   install(TARGETS ${project} DESTINATION "/opt/prime/bin")
 elseif (MYMODE STREQUAL beagle)
    install(CODE "execute_process(COMMAND_ECHO STDOUT
-      COMMAND c:/windows/system32/openssh/scp ${CMAKE_CURRENT_BINARY_DIR}/${Project} pi@rpx:/opt/prime/bin)")
+      COMMAND c:/windows/system32/openssh/scp ${CMAKE_CURRENT_BINARY_DIR}/${project} pi@rpx:/opt/prime/bin)")
 endif()
