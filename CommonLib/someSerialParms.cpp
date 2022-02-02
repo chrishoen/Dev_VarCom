@@ -45,6 +45,7 @@ void SerialParms::reset()
    mSerialRxTimeout = 0;
    mTxTermMode = 0;
    mRxTermMode = 0;
+   mCheckSumFlag = true;
    mThreadTimerPeriod = 0;
    mNumWords = 0;
    mReadAllFlag = false;
@@ -69,6 +70,7 @@ void SerialParms::show()
    printf("\n");
    printf("TxTermMode              %-12s\n", Ris::string_from_int_SerialSettingsTermMode(mTxTermMode));
    printf("RxTermMode              %-12s\n", Ris::string_from_int_SerialSettingsTermMode(mRxTermMode));
+   printf("CheckSumFlag            %-12s\n", my_string_from_bool(mCheckSumFlag));
 
    printf("\n");
    printf("ThreadTimerPeriod       %-12d\n", mThreadTimerPeriod);
@@ -100,6 +102,7 @@ void SerialParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("TxTermMode"))        mTxTermMode = Ris::int_from_string_SerialSettingsTermMode(aCmd->argString(1));
    if (aCmd->isCmd("RxTermMode"))        mRxTermMode = Ris::int_from_string_SerialSettingsTermMode(aCmd->argString(1));
+   if (aCmd->isCmd("CheckSumFlag"))      mCheckSumFlag = aCmd->argBool(1);
 
    if (aCmd->isCmd("ThreadTimerPeriod")) mThreadTimerPeriod = aCmd->argInt(1);
    if (aCmd->isCmd("NumWords"))          mNumWords = aCmd->argInt(1);
