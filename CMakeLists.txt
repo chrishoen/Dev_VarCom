@@ -10,11 +10,11 @@ include(MySpecial.cmake)
 project ("Dev_VarCom")
 my_special1() 
 
-add_subdirectory ("Test")
-return()
-
 add_subdirectory ("CommonLib")
 add_subdirectory ("SerialTest3")
+return()
+
+add_subdirectory ("Test")
 return()
 
 add_subdirectory ("CommonLib")

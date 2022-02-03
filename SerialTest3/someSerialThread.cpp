@@ -145,7 +145,8 @@ restart:
          mRxCount = tRet;
 
          // Show.
-         Prn::print(Prn::Show1, "Serial read  $$$    %d %s", mRxCount, mRxBuffer);
+         //Prn::print(Prn::Show1, "Serial read  $$$    %d %s", mRxCount, mRxBuffer);
+         Prn::print(Prn::Show1, "Serial read  $$$    %s", mRxBuffer);
       }
    }
    
@@ -227,7 +228,8 @@ void SerialThread::sendString(char* aString)
    mTxCount = tRet;
 
    // Show.
-   Prn::print(Prn::Show1, "Serial write $$$$$$ %d %s", mTxCount, aString);
+   //Prn::print(Prn::Show1, "Serial write $$$$$$ %d %s", mTxCount, aString);
+   Prn::print(Prn::Show1, "Serial write $$$$$$ %s", aString);
 
    return;
 
