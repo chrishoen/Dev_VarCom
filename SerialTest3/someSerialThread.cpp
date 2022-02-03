@@ -241,8 +241,8 @@ void SerialThread::sendString(char* aString)
 void SerialThread::appendCheckSum(char* aString)
 {
    int tLength = (int)strlen(aString);
-   int tCheckSum = 0;
-   for (int i = 0; i < tLength; i++) tCheckSum += (int)aString[i];
+   unsigned tCheckSum = 0;
+   for (int i = 0; i < tLength; i++) tCheckSum += (unsigned)aString[i];
    tCheckSum &= 0xff;
    char tCheckSumString[10];
    sprintf(tCheckSumString, "<%02X>", tCheckSum);
