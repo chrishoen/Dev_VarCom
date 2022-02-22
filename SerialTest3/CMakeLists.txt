@@ -14,9 +14,9 @@ my_lib_import_RisLib(${project})
 
 if (MSVC)
    install(TARGETS ${project} DESTINATION "C:/aaa_prime/VarCom")
-elseif (MYMODE STREQUAL "ubuntu") 
+elseif (MYMODE STREQUAL "cpdev1") 
    install(TARGETS ${project} DESTINATION "/opt/prime/bin")
-elseif (MYMODE STREQUAL "wsl")
+elseif (MYMODE STREQUAL "wsl-cpdev1")
    install(CODE "execute_process(COMMAND_ECHO STDOUT
       COMMAND scp ${CMAKE_CURRENT_BINARY_DIR}/${project} main@cpdev1:/opt/prime/bin)")
 elseif (MYMODE STREQUAL "beagle")
