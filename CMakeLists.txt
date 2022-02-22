@@ -11,6 +11,10 @@ project ("Dev_VarCom")
 my_special1() 
 
 add_subdirectory ("CommonLib")
+add_subdirectory ("varcom")
+return()
+
+add_subdirectory ("CommonLib")
 add_subdirectory ("SerialTest3")
 return()
 
