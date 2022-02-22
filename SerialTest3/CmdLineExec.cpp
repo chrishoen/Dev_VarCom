@@ -31,7 +31,12 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("REQ"))      Some::gSerialThread->mRxReqNumBytes = aCmd->argInt(1);
    if (aCmd->isCmd("SEND"))     executeSend(aCmd);
    if (aCmd->isCmd("ABORT"))    executeAbort(aCmd);
-   if (aCmd->isCmd("TEST1"))    executeTest1(aCmd);
+   if (aCmd->isCmd("START"))    executeStart(aCmd);
+   if (aCmd->isCmd("HM"))       executeHome(aCmd);
+   if (aCmd->isCmd("UP"))       executeUp(aCmd);
+   if (aCmd->isCmd("DN"))       executeDown(aCmd);
+   if (aCmd->isCmd("SP"))       executeStopped(aCmd);
+
    if (aCmd->isCmd("GO1"))      executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))      executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))      executeGo3(aCmd);
@@ -72,8 +77,73 @@ void CmdLineExec::executeAbort(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeTest1(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeStart(Ris::CmdLineCmd* aCmd)
 {
+   int tTimeout = 200;
+   Some::gSerialThread->sendString("\\3");
+   Ris::Threads::threadSleep(tTimeout);
+   Some::gSerialThread->sendString("en");
+   Ris::Threads::threadSleep(tTimeout);
+   Some::gSerialThread->sendString("echo 1");
+   Ris::Threads::threadSleep(tTimeout);
+   Some::gSerialThread->sendString("homecmd");
+   Ris::Threads::threadSleep(tTimeout);
+   Some::gSerialThread->sendString("ready");
+   Ris::Threads::threadSleep(tTimeout);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeHome(Ris::CmdLineCmd* aCmd)
+{
+   Some::gSerialThread->sendString("homecmd");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeUp(Ris::CmdLineCmd* aCmd)
+{
+   int tTimeout = 200;
+   int tCount = 4;
+
+   Some::gSerialThread->sendString("moveinc 50000 20");
+
+   for (int i = 0; i < tCount; i++)
+   {
+      Ris::Threads::threadSleep(tTimeout);
+      Some::gSerialThread->sendString("stopped");
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeDown(Ris::CmdLineCmd* aCmd)
+{
+   int tTimeout = 200;
+   int tCount = 4;
+
+   Some::gSerialThread->sendString("moveinc -50000 20");
+
+   for (int i = 0; i < tCount; i++)
+   {
+      Ris::Threads::threadSleep(tTimeout);
+      Some::gSerialThread->sendString("stopped");
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeStopped(Ris::CmdLineCmd* aCmd)
+{
+   Some::gSerialThread->sendString("stopped");
 }
 
 //******************************************************************************

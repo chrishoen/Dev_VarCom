@@ -55,7 +55,12 @@ public:
    // Execute specific commands.
    void executeSend    (Ris::CmdLineCmd* aCmd);
    void executeAbort   (Ris::CmdLineCmd* aCmd);
-   void executeTest1   (Ris::CmdLineCmd* aCmd);
+   void executeStart   (Ris::CmdLineCmd* aCmd);
+   void executeHome    (Ris::CmdLineCmd* aCmd);
+   void executeUp      (Ris::CmdLineCmd* aCmd);
+   void executeDown    (Ris::CmdLineCmd* aCmd);
+   void executeStopped (Ris::CmdLineCmd* aCmd);
+
    void executeGo1     (Ris::CmdLineCmd* aCmd);
    void executeGo2     (Ris::CmdLineCmd* aCmd);
    void executeGo3     (Ris::CmdLineCmd* aCmd);
