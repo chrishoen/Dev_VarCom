@@ -116,8 +116,9 @@ bool SerialStringSR::doSendReceive(const char* aTxString, int aNumReceive)
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Loop to receive strings.
+   // Loop to receive response strings.
 
+   mRxCount = 0;
    for (int tIndex = 0; tIndex < cMaxReceive; tIndex++)
    {
       Prn::print(Prn::Show4, "SerialStringSR read start********************************************** %d", mRxCount++);
@@ -128,7 +129,7 @@ bool SerialStringSR::doSendReceive(const char* aTxString, int aNumReceive)
       // Receive.
 
       // Receive. 
-      mRetCode = mSerialStringPort.doReceiveString(mRxString, cMaxStringSize);
+      mRetCode = mSerialStringPort.doReceiveString(mRxString[tIndex], cMaxStringSize);
 
       // Check for terminate.
       if (mAbortFlag)
@@ -170,6 +171,7 @@ bool SerialStringSR::doSendReceive(const char* aTxString, int aNumReceive)
    }
 
    // Done.
+   mRxCount++;
    return true;
 }
 

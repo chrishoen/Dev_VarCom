@@ -42,7 +42,7 @@ public:
    SerialStringPort mSerialStringPort;
 
    // Rx string.
-   char mRxString[cMaxStringSize];
+   char mRxString[cMaxReceive][cMaxStringSize];
 
    // If true then the serial port is open. If false then it is closed
    // because of an error.
