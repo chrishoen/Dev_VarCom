@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "someSerialParms.h"
-#include "someSerialThread.h"
+#include "someVarcomSRThread.h"
 #include "CmdLineExec.h"
 
 //******************************************************************************
@@ -28,7 +28,7 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("REQ"))      Some::gSerialThread->mRxReqNumBytes = aCmd->argInt(1);
+   if (aCmd->isCmd("REQ"))      Some::gVarcomSRThread->mRxReqNumBytes = aCmd->argInt(1);
    if (aCmd->isCmd("SEND"))     executeSend(aCmd);
    if (aCmd->isCmd("ABORT"))    executeAbort(aCmd);
    if (aCmd->isCmd("START"))    executeStart(aCmd);
@@ -61,7 +61,7 @@ void CmdLineExec::executeSend(Ris::CmdLineCmd* aCmd)
    {
       sprintf(tString, "%s", aCmd->argWhole());
    }
-   Some::gSerialThread->sendString(tString);
+   Some::gVarcomSRThread->sendString(tString);
 }
 
 //******************************************************************************
@@ -70,7 +70,7 @@ void CmdLineExec::executeSend(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeAbort(Ris::CmdLineCmd* aCmd)
 {
-   Some::gSerialThread->abort();
+   Some::gVarcomSRThread->abort();
 }
 
 //******************************************************************************
@@ -80,15 +80,15 @@ void CmdLineExec::executeAbort(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeStart(Ris::CmdLineCmd* aCmd)
 {
    int tTimeout = 200;
-   Some::gSerialThread->sendString("\\3");
+   Some::gVarcomSRThread->sendString("\\3");
    Ris::Threads::threadSleep(tTimeout);
-   Some::gSerialThread->sendString("en");
+   Some::gVarcomSRThread->sendString("en");
    Ris::Threads::threadSleep(tTimeout);
-   Some::gSerialThread->sendString("echo 1");
+   Some::gVarcomSRThread->sendString("echo 1");
    Ris::Threads::threadSleep(tTimeout);
-   Some::gSerialThread->sendString("homecmd");
+   Some::gVarcomSRThread->sendString("homecmd");
    Ris::Threads::threadSleep(tTimeout);
-   Some::gSerialThread->sendString("ready");
+   Some::gVarcomSRThread->sendString("ready");
    Ris::Threads::threadSleep(tTimeout);
 }
 
@@ -98,7 +98,7 @@ void CmdLineExec::executeStart(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeHome(Ris::CmdLineCmd* aCmd)
 {
-   Some::gSerialThread->sendString("homecmd");
+   Some::gVarcomSRThread->sendString("homecmd");
 }
 
 //******************************************************************************
@@ -110,12 +110,12 @@ void CmdLineExec::executeUp(Ris::CmdLineCmd* aCmd)
    int tTimeout = 200;
    int tCount = 4;
 
-   Some::gSerialThread->sendString("moveinc 50000 20");
+   Some::gVarcomSRThread->sendString("moveinc 50000 20");
 
    for (int i = 0; i < tCount; i++)
    {
       Ris::Threads::threadSleep(tTimeout);
-      Some::gSerialThread->sendString("stopped");
+      Some::gVarcomSRThread->sendString("stopped");
    }
 }
 
@@ -128,12 +128,12 @@ void CmdLineExec::executeDown(Ris::CmdLineCmd* aCmd)
    int tTimeout = 200;
    int tCount = 4;
 
-   Some::gSerialThread->sendString("moveinc -50000 20");
+   Some::gVarcomSRThread->sendString("moveinc -50000 20");
 
    for (int i = 0; i < tCount; i++)
    {
       Ris::Threads::threadSleep(tTimeout);
-      Some::gSerialThread->sendString("stopped");
+      Some::gVarcomSRThread->sendString("stopped");
    }
 }
 
@@ -143,7 +143,7 @@ void CmdLineExec::executeDown(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeStopped(Ris::CmdLineCmd* aCmd)
 {
-   Some::gSerialThread->sendString("stopped");
+   Some::gVarcomSRThread->sendString("stopped");
 }
 
 //******************************************************************************

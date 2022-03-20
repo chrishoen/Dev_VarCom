@@ -8,8 +8,8 @@
 
 #include "someSerialParms.h"
 
-#define  _SOMESERIALTHREAD_CPP_
-#include "someSerialThread.h"
+#define  _SOMEVARCOMSRTHREAD_CPP_
+#include "someVarcomSRThread.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -23,7 +23,7 @@ namespace Some
 //******************************************************************************
 // Constructor.
 
-SerialThread::SerialThread()
+VarcomSRThread::VarcomSRThread()
 {
    // Set base class thread services.
    BaseClass::setThreadName("Serial");
@@ -48,7 +48,7 @@ SerialThread::SerialThread()
 // Thread init function. This is called by the base class immediately
 // after the thread starts running. It initializes the serial port.
 
-void SerialThread::threadInitFunction()
+void VarcomSRThread::threadInitFunction()
 {
    // Serial port settings.
    mSettings.reset();
@@ -71,7 +71,7 @@ void SerialThread::threadInitFunction()
 // serial port receives and then processes them. The loop terminates
 // when the serial port receive is aborted.
 
-void SerialThread::threadRunFunction()
+void VarcomSRThread::threadRunFunction()
 {
    // Top of the loop.
    mRestartCount = 0;
@@ -161,9 +161,9 @@ end:
 // Thread exit function. This is called by the base class immediately
 // before the thread is terminated. It is close the serial port.
 
-void SerialThread::threadExitFunction()
+void VarcomSRThread::threadExitFunction()
 {
-   printf("someSerialThread::threadExitFunction\n");
+   printf("someVarcomSRThread::threadExitFunction\n");
 
    // Close the serial port.
    mSerialPort.doClose();
@@ -176,9 +176,9 @@ void SerialThread::threadExitFunction()
 // this thread. It aborts the serial port receive and waits for the
 // thread to terminate after execution of the thread exit function.
 
-void SerialThread::shutdownThread()
+void VarcomSRThread::shutdownThread()
 {
-   printf("someSerialThread::shutdownThread\n");
+   printf("someVarcomSRThread::shutdownThread\n");
 
    // Abort pending serial port receives
    mSerialPort.doAbort();
@@ -192,7 +192,7 @@ void SerialThread::shutdownThread()
 //******************************************************************************
 // Abort a pending receive.
 
-void SerialThread::abort()
+void VarcomSRThread::abort()
 {
    mSerialPort.doAbort();
 }
@@ -203,7 +203,7 @@ void SerialThread::abort()
 // Send bytes via the serial port. This executes in the context of
 // the calling thread.
 
-void SerialThread::sendString(char* aString)
+void VarcomSRThread::sendString(char* aString)
 {
    // Guard.
    if (!mSerialPort.mValidFlag) return;

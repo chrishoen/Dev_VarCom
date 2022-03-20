@@ -73,7 +73,7 @@ public:
    // Constructor.
    SerialStringSR();
    ~SerialStringSR();
-   void initialize(SerialSettings& aSettings);
+   virtual void initialize(SerialSettings& aSettings);
    void finalize();
 
    //***************************************************************************

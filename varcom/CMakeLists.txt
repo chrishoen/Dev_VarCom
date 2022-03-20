@@ -12,7 +12,7 @@ my_inc_import_CommonLib(${project})
 my_lib_import_CommonLib(${project})
 my_lib_import_RisLib(${project})
 
-if (MSVC)
+if (MSSome)
    install(TARGETS ${project} DESTINATION "C:/aaa_prime/VarCom")
 elseif (MYMODE STREQUAL "cpdev1") 
    install(TARGETS ${project} DESTINATION "/opt/prime/bin")

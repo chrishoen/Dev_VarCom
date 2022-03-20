@@ -5,7 +5,7 @@
 #include "risCmdLineConsole.h"
 #include "CmdLineExec.h"
 
-#include "someSerialThread.h"
+#include "someVarcomSRThread.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -25,8 +25,8 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Launch program threads.
 
-   Some::gSerialThread = new Some::SerialThread;
-   Some::gSerialThread->launchThread();
+   Some::gVarcomSRThread = new Some::VarcomSRThread;
+   Some::gVarcomSRThread->launchThread();
 
    //***************************************************************************
    //***************************************************************************
@@ -34,7 +34,7 @@ int main(int argc,char** argv)
    // Show program threads.
 
    Ris::Threads::showCurrentThreadInfo();
-   if (Some::gSerialThread)    Some::gSerialThread->showThreadInfo();
+   if (Some::gVarcomSRThread)    Some::gVarcomSRThread->showThreadInfo();
 
    //***************************************************************************
    //***************************************************************************
@@ -50,17 +50,17 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Shutdown program threads.
 
-   if (Some::gSerialThread)     Some::gSerialThread->shutdownThread();
+   if (Some::gVarcomSRThread)     Some::gVarcomSRThread->shutdownThread();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Delete program threads.
 
-   if (Some::gSerialThread)
+   if (Some::gVarcomSRThread)
    {
-      delete Some::gSerialThread;
-      Some::gSerialThread = 0;
+      delete Some::gVarcomSRThread;
+      Some::gVarcomSRThread = 0;
    }
 
    //***************************************************************************

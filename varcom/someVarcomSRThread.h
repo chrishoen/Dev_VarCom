@@ -24,7 +24,7 @@ namespace Some
 // This is a thread that uses a serial port. It initializes and configures
 // the port based on a parms file and then loops on port receives.
 
-class SerialThread : public Ris::Threads::BaseThread
+class VarcomSRThread : public Ris::Threads::BaseThread
 {
 public:
    typedef Ris::Threads::BaseThread BaseClass;
@@ -67,7 +67,7 @@ public:
    // Methods.
 
    // Constructor.
-   SerialThread();
+   VarcomSRThread();
 
    //***************************************************************************
    //***************************************************************************
@@ -116,10 +116,10 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SOMESERIALTHREAD_CPP_
-SerialThread* gSerialThread = 0;
+#ifdef _SOMEVARCOMSRTHREAD_CPP_
+VarcomSRThread* gVarcomSRThread = 0;
 #else
-extern  SerialThread* gSerialThread;
+extern  VarcomSRThread* gVarcomSRThread;
 #endif
 
 //******************************************************************************
