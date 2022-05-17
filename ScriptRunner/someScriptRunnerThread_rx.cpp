@@ -1,50 +1,58 @@
 /*==============================================================================
-Description:
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-
 #include "stdafx.h"
 
-#include <windows.h>
+#include "someState.h"
 
-#define  _CMNPRIORITIES_CPP_
-#include "cmnPriorities.h"
+#include "someScriptRunnerThread.h"
 
-namespace Cmn
+namespace Some
 {
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// qcall registered to the mSerialStringThread child thread. It is invoked
+// when a session is established or disestablished (when the serial port
+// is opened or it is closed because of an error or a disconnection). 
 
-static const int tInt1 = THREAD_PRIORITY_TIME_CRITICAL;
-static const int tInt2 = THREAD_PRIORITY_HIGHEST;
-static const int tInt3 = THREAD_PRIORITY_ABOVE_NORMAL;
-static const int tInt4 = THREAD_PRIORITY_NORMAL;
-static const int tInt5 = THREAD_PRIORITY_BELOW_NORMAL;
-static const int tInt6 = THREAD_PRIORITY_LOWEST;
-static const int tInt7 = THREAD_PRIORITY_IDLE;
-
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Constructor.
-
-Priorities::Priorities()
+void ScriptRunnerThread::executeSession(bool aConnected)
 {
-   mScriptLong = Ris::Threads::Priority(-1, 50);
-   mScriptShort = Ris::Threads::Priority(-1, 60);
-   mSerial = Ris::Threads::Priority(-1, 70);
-   mMonitor = Ris::Threads::Priority(-1, 40);
+   if (aConnected)
+   {
+      Prn::print(Prn::Show1, "ScriptRunnerThread CONNECTED");
+   }
+   else
+   {
+      Prn::print(Prn::Show1, "ScriptRunnerThread DISCONNECTED");
+   }
 
-   mScriptLong        = Ris::Threads::Priority(-1, THREAD_PRIORITY_NORMAL);
-   mScriptShort       = Ris::Threads::Priority(-1, THREAD_PRIORITY_ABOVE_NORMAL);
-   mSerial            = Ris::Threads::Priority(-1, THREAD_PRIORITY_ABOVE_NORMAL);
-   mMonitor            = Ris::Threads::Priority(-1, THREAD_PRIORITY_BELOW_NORMAL);
+   mConnectionFlag = aConnected;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// This is bound to the qcall. Write the received string to the string
+// queue and notify the long thread, which will then process the string.
+
+void ScriptRunnerThread::executeRxString(std::string* aRxString)
+{
+   // Try to write the received string to the string queue.
+   // It will be processed by the long thread.
+   if (!mRxStringQueue.tryWrite(aRxString))
+   {
+      Prn::print(Prn::Show1, "RxStringQueue ERROR queue full");
+      delete aRxString;
+   }
+   Trc::write(1, 0, "executeRxString %s", aRxString->c_str());
+
+   // Notify the long thread.
+   mNotify.notify(cRxStringNotifyCode);
 }
 
 //******************************************************************************
