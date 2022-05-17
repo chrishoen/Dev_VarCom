@@ -34,7 +34,7 @@ void ScriptRunnerThread::executeRunScript()
 
    // Open the script file.
    mReadCount = 0;
-   if (!mScript.doOpen("files/script_rgb.txt")) throw 991;
+   if (!mScript.doOpen("files/script_varcom1.txt")) throw 991;
 
    // Set the state and send a string to the controller.
    gState.setStateSX2_Running();
