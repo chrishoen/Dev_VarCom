@@ -48,17 +48,17 @@ void ScriptRunnerThread::executeRunScript()
          if (mScript.doRead(&mCmd))
          {
             if (mCmd.isCmd("EXIT")) break;
+            mReadCount++;
+
+            // Test for a notification exception.
+            mNotify.testException();
+
+            // Delay.
+            mNotify.waitForTimer(cScriptThrottle);
+
+            // Execute the script file command.
+            execute(&mCmd);
          }
-         mReadCount++;
-
-         // Test for a notification exception.
-         mNotify.testException();
-
-         // Delay.
-         mNotify.waitForTimer(cScriptThrottle);
-
-         // Execute the script file command.
-         execute(&mCmd);
       }
    }
    catch (int aException)

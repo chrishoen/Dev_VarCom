@@ -87,6 +87,9 @@ public:
    // True if the serial connection is valid.
    bool mConnectionFlag;
 
+   // Motor address.
+   int mAddr;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -239,9 +242,11 @@ public:
    void execute(Ris::CmdLineCmd* aCmd);
 
    // Execute specific commands.
-   void executeRed(Ris::CmdLineCmd* aCmd);
-   void executeGreen(Ris::CmdLineCmd* aCmd);
-   void executeBlue(Ris::CmdLineCmd* aCmd);
+   void executeFirst(Ris::CmdLineCmd* aCmd);
+   void executeEnable(Ris::CmdLineCmd* aCmd);
+   void executeEcho(Ris::CmdLineCmd* aCmd);
+   void executeHome(Ris::CmdLineCmd* aCmd);
+   void executeReady(Ris::CmdLineCmd* aCmd);
 
    //***************************************************************************
    //***************************************************************************

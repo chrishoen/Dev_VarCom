@@ -53,6 +53,7 @@ ScriptRunnerThread::ScriptRunnerThread()
    // Initialize member variables.
    mSerialStringThread = 0;
    mConnectionFlag = false;
+   mAddr = 3;
 }
 
 ScriptRunnerThread::~ScriptRunnerThread()
