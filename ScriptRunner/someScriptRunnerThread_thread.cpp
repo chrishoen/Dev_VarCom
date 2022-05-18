@@ -168,7 +168,8 @@ void ScriptRunnerThread::flushRxStringQueue()
    int tNumFlush = mRxStringQueue.flushRead();
    if (tNumFlush)
    {
-      Prn::print(0, "mRxStringQueue.flushRead() NOT EMPTY %d", tNumFlush);
+      Prn::print(0,    "flushRead() NOT EMPTY %d", tNumFlush);
+      Trc::write(1, 0, "flushRead() NOT EMPTY %d", tNumFlush);
    }
 }
 

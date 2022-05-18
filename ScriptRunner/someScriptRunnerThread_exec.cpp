@@ -48,11 +48,14 @@ void ScriptRunnerThread::executeFirst(Ris::CmdLineCmd* aCmd)
    sendString(tRequest);
 
    // Wait and read the response from the queue and process it.
-   mNotify.wait(cInfiniteTimeout);
-   std::string* tResponse1 = mRxStringQueue.tryRead();
-   if (tResponse1 == 0) throw 888;
-   Trc::write(1, 0, "executeFirst RX       %s", tResponse1->c_str());
-   delete tResponse1;
+   if (false)
+   {
+      mNotify.wait(cInfiniteTimeout);
+      std::string* tResponse1 = mRxStringQueue.tryRead();
+      if (tResponse1 == 0) throw 888;
+      Trc::write(1, 0, "executeFirst RX       %s", tResponse1->c_str());
+      delete tResponse1;
+   }
 
    Trc::write(1, 0, "executeFirst done");
 }
@@ -162,6 +165,13 @@ void ScriptRunnerThread::executeReady(Ris::CmdLineCmd* aCmd)
    if (tResponse1 == 0) throw 888;
    Trc::write(1, 0, "executeReady RX       %s", tResponse1->c_str());
    delete tResponse1;
+
+   // Wait and read the response from the queue and process it.
+   mNotify.wait(cInfiniteTimeout);
+   std::string* tResponse2 = mRxStringQueue.tryRead();
+   if (tResponse2 == 0) throw 888;
+   Trc::write(1, 0, "executeReady RX       %s", tResponse2->c_str());
+   delete tResponse2;
 
    // Done.
    Trc::write(1, 0, "executeReady done");
