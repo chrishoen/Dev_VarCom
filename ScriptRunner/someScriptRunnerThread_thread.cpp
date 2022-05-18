@@ -91,6 +91,8 @@ void ScriptRunnerThread::threadInitFunction()
 
    tSerialSettings.setPortDevice(gSerialParms.mSerialPortDevice);
    tSerialSettings.setPortSetup(gSerialParms.mSerialPortSetup);
+   tSerialSettings.mTxTermMode = gSerialParms.mTxTermMode;
+   tSerialSettings.mRxTermMode = gSerialParms.mRxTermMode;
    tSerialSettings.mThreadPriority = Ris::Threads::gPriorities.mSerial;
    tSerialSettings.mRxTimeout = gSerialParms.mSerialRxTimeout;
    tSerialSettings.mSessionQCall = mSessionQCall;
