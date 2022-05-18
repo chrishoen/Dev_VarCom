@@ -26,6 +26,7 @@ void ScriptRunnerThread::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("ECHO"))      executeEcho(aCmd);
    if (aCmd->isCmd("HOME"))      executeHome(aCmd);
    if (aCmd->isCmd("READY"))     executeReady(aCmd);
+   if (aCmd->isCmd("MOVE"))      executeMove(aCmd);
    if (aCmd->isCmd("WAITSTOP"))  executeWaitStop(aCmd);
 }
 
@@ -175,6 +176,35 @@ void ScriptRunnerThread::executeReady(Ris::CmdLineCmd* aCmd)
 
    // Done.
    Trc::write(1, 0, "executeReady done");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void ScriptRunnerThread::executeMove(Ris::CmdLineCmd* aCmd)
+{
+   Trc::write(1, 0, "executeMove");
+
+   // Set the thread notification mask and flush the string queue.
+   mNotify.setMaskOne("RxString", cRxStringNotifyCode);
+   flushRxStringQueue();
+
+   // Send a request to the motor.
+   char tString1[40];
+   sprintf(tString1, "moveinc %d 20", aCmd->argInt(1));
+   std::string* tRequest = new std::string(tString1);
+   sendString(tRequest);
+
+   // Wait and read the response from the queue and process it.
+   mNotify.wait(cInfiniteTimeout);
+   std::string* tResponse1 = mRxStringQueue.tryRead();
+   if (tResponse1 == 0) throw 888;
+   Trc::write(1, 0, "executeMove RX        %s", tResponse1->c_str());
+   delete tResponse1;
+
+   // Done.
+   Trc::write(1, 0, "executeMove done");
 }
 
 //******************************************************************************
