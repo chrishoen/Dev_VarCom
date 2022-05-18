@@ -247,6 +247,7 @@ public:
    void executeEcho(Ris::CmdLineCmd* aCmd);
    void executeHome(Ris::CmdLineCmd* aCmd);
    void executeReady(Ris::CmdLineCmd* aCmd);
+   void executeWaitStop(Ris::CmdLineCmd* aCmd);
 
    //***************************************************************************
    //***************************************************************************

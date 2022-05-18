@@ -49,7 +49,7 @@ void ScriptRunnerThread::executeRxString(std::string* aRxString)
       Prn::print(Prn::Show1, "RxStringQueue ERROR queue full");
       delete aRxString;
    }
-   Trc::write(1, 0, "executeRxString %s", aRxString->c_str());
+   Trc::write(1, 0, "executeRxString       %s", aRxString->c_str());
 
    // Notify the long thread.
    mNotify.notify(cRxStringNotifyCode);

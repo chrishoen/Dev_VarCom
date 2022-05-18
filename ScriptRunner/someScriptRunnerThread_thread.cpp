@@ -189,7 +189,7 @@ void ScriptRunnerThread::executeAbortScript()
 
 void ScriptRunnerThread::sendString(std::string* aString)
 {
-   Trc::write(1, 0, "sendString %s", aString->c_str());
+   Trc::write(1, 0, "sendString            %s", aString->c_str());
    mSerialStringThread->sendString(aString);
 }
 

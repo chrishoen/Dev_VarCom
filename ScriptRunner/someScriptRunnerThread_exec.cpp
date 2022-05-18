@@ -21,11 +21,12 @@ namespace Some
 
 void ScriptRunnerThread::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("FIRST"))    executeFirst(aCmd);
-   if (aCmd->isCmd("ENABLE"))   executeEnable(aCmd);
-   if (aCmd->isCmd("ECHO"))     executeEcho(aCmd);
-   if (aCmd->isCmd("HOME"))     executeHome(aCmd);
-   if (aCmd->isCmd("READY"))    executeReady(aCmd);
+   if (aCmd->isCmd("FIRST"))     executeFirst(aCmd);
+   if (aCmd->isCmd("ENABLE"))    executeEnable(aCmd);
+   if (aCmd->isCmd("ECHO"))      executeEcho(aCmd);
+   if (aCmd->isCmd("HOME"))      executeHome(aCmd);
+   if (aCmd->isCmd("READY"))     executeReady(aCmd);
+   if (aCmd->isCmd("WAITSTOP"))  executeWaitStop(aCmd);
 }
 
 //******************************************************************************
@@ -50,7 +51,7 @@ void ScriptRunnerThread::executeFirst(Ris::CmdLineCmd* aCmd)
    mNotify.wait(cInfiniteTimeout);
    std::string* tResponse1 = mRxStringQueue.tryRead();
    if (tResponse1 == 0) throw 888;
-   Trc::write(1, 0, "executeFirst RX %s", tResponse1->c_str());
+   Trc::write(1, 0, "executeFirst RX       %s", tResponse1->c_str());
    delete tResponse1;
 
    Trc::write(1, 0, "executeFirst done");
@@ -76,7 +77,7 @@ void ScriptRunnerThread::executeEnable(Ris::CmdLineCmd* aCmd)
    mNotify.wait(cInfiniteTimeout);
    std::string* tResponse1 = mRxStringQueue.tryRead();
    if (tResponse1 == 0) throw 888;
-   Trc::write(1, 0, "executeEnable RX %s", tResponse1->c_str());
+   Trc::write(1, 0, "executeEnable RX      %s", tResponse1->c_str());
    delete tResponse1;
 
    // Done.
@@ -105,7 +106,7 @@ void ScriptRunnerThread::executeEcho(Ris::CmdLineCmd* aCmd)
    mNotify.wait(cInfiniteTimeout);
    std::string* tResponse1 = mRxStringQueue.tryRead();
    if (tResponse1 == 0) throw 888;
-   Trc::write(1, 0, "executeEcho RX %s", tResponse1->c_str());
+   Trc::write(1, 0, "executeEcho RX        %s", tResponse1->c_str());
    delete tResponse1;
 
    // Done.
@@ -132,7 +133,7 @@ void ScriptRunnerThread::executeHome(Ris::CmdLineCmd* aCmd)
    mNotify.wait(cInfiniteTimeout);
    std::string* tResponse1 = mRxStringQueue.tryRead();
    if (tResponse1 == 0) throw 888;
-   Trc::write(1, 0, "executeHome RX %s", tResponse1->c_str());
+   Trc::write(1, 0, "executeHome RX        %s", tResponse1->c_str());
    delete tResponse1;
 
    // Done.
@@ -159,11 +160,38 @@ void ScriptRunnerThread::executeReady(Ris::CmdLineCmd* aCmd)
    mNotify.wait(cInfiniteTimeout);
    std::string* tResponse1 = mRxStringQueue.tryRead();
    if (tResponse1 == 0) throw 888;
-   Trc::write(1, 0, "executeReady RX %s", tResponse1->c_str());
+   Trc::write(1, 0, "executeReady RX       %s", tResponse1->c_str());
    delete tResponse1;
 
    // Done.
    Trc::write(1, 0, "executeReady done");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void ScriptRunnerThread::executeWaitStop(Ris::CmdLineCmd* aCmd)
+{
+   Trc::write(1, 0, "executeWaitStop");
+
+   // Set the thread notification mask and flush the string queue.
+   mNotify.setMaskOne("RxString", cRxStringNotifyCode);
+   flushRxStringQueue();
+
+   // Send a request to the motor.
+   std::string* tRequest = new std::string("stopped");
+   sendString(tRequest);
+
+   // Wait and read the response from the queue and process it.
+   mNotify.wait(cInfiniteTimeout);
+   std::string* tResponse1 = mRxStringQueue.tryRead();
+   if (tResponse1 == 0) throw 888;
+   Trc::write(1, 0, "executeWaitStop RX    %s", tResponse1->c_str());
+   delete tResponse1;
+
+   // Done.
+   Trc::write(1, 0, "executeWaitStop done");
 }
 
 //******************************************************************************
