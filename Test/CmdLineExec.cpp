@@ -46,15 +46,17 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   unsigned char ucharA1 = 0x81;
-   unsigned char ucharA2 = 0x82;
-   unsigned uintB1 = (unsigned)ucharA1 + (unsigned)ucharA2;
-   Prn::print(0, "uintB1 %04x", uintB1);
+   // abc 9
+   std::string* tInput = new std::string(aCmd->argWhole());
+   Prn::print(0, "input  %s", tInput->c_str());
 
-   char charA1 = (char)0x81;
-   char charA2 = (char)0x82;
-   int intB1 = (int)charA1 + (int)charA2;
-   Prn::print(0, "intB1  %04x", intB1);
+   int tRet = 0;
+   int tValue = 0;
+   tRet = sscanf(tInput->c_str(), "abc %d", &tValue);
+
+   Prn::print(0, "tRet    %d", tRet);
+   Prn::print(0, "tValue  %d", tValue);
+   Prn::print(0, "");
 }
 
 //******************************************************************************
@@ -63,6 +65,21 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   // abpqc
+   // abpqrsc
+   std::string* tInput = new std::string(aCmd->argWhole());
+   Prn::print(0, "input  %s", tInput->c_str());
+
+   int tRet = 0;
+   char tString1[40];
+   int tInt1 = 0;
+   tString1[0] = 0;
+   tRet = sscanf(tInput->c_str(), "ab%2scd%d", tString1, &tInt1);
+
+   Prn::print(0, "tRet      %d", tRet);
+   Prn::print(0, "tString1  %s", tString1);
+   Prn::print(0, "tInt1     %d", tInt1);
+   Prn::print(0, "");
 }
 
 //******************************************************************************
@@ -71,6 +88,27 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 {
+   // abc def
+   // abc 123
+   std::string* tInput = new std::string(aCmd->argWhole());
+   Prn::print(0, "input  %s", tInput->c_str());
+
+   int tRet = 0;
+   char tString1[40];
+   char tString2[40];
+   int tInt2 = 0;
+   tString1[0] = 0;
+   tString2[0] = 0;
+   tRet = sscanf(tInput->c_str(), "%s %s", tString1, tString2);
+
+   Prn::print(0, "tRet      %d", tRet);
+   Prn::print(0, "tString1  %s", tString1);
+   Prn::print(0, "tString2  %s", tString2);
+
+   tRet = sscanf(tString2, "%d", &tInt2);
+   Prn::print(0, "tRet      %d", tRet);
+   Prn::print(0, "tInt2     %d", tInt2);
+   Prn::print(0, "");
 }
 
 //******************************************************************************
@@ -79,6 +117,20 @@ void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 {
+   // abc.def
+   std::string* tInput = new std::string(aCmd->argWhole());
+   Prn::print(0, "input  %s", tInput->c_str());
+
+   int tRet = 0;
+   char tString1[40];
+   char tString2[40];
+   tString1[0] = 0;
+   tString2[0] = 0;
+   tRet = sscanf(tInput->c_str(), "%s.%s", tString1, tString2);
+
+   Prn::print(0, "tRet      %d", tRet);
+   Prn::print(0, "tString1  %s", tString1);
+   Prn::print(0, "tString2  %s", tString2);
 }
 
 //******************************************************************************

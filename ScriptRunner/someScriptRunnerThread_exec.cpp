@@ -185,28 +185,51 @@ void ScriptRunnerThread::executeWaitStop(Ris::CmdLineCmd* aCmd)
 {
    Trc::write(1, 0, "executeWaitStop");
 
-   // Set the thread notification mask and flush the string queue.
-   mNotify.setMaskOne("RxString", cRxStringNotifyCode);
-   flushRxStringQueue();
+   while (true)
+   {
+      // Set the thread notification mask and flush the string queue.
+      mNotify.setMaskOne("RxString", cRxStringNotifyCode);
+      flushRxStringQueue();
 
-   // Send a request to the motor.
-   std::string* tRequest = new std::string("stopped");
-   sendString(tRequest);
+      // Send a request to the motor.
+      std::string* tRequest = new std::string("stopped");
+      sendString(tRequest);
 
-   // Wait and read the response from the queue and process it.
-   mNotify.wait(cInfiniteTimeout);
-   std::string* tResponse1 = mRxStringQueue.tryRead();
-   if (tResponse1 == 0) throw 888;
-   Trc::write(1, 0, "executeWaitStop RX    %s", tResponse1->c_str());
-   delete tResponse1;
+      // Wait and read the response from the queue and process it.
+      mNotify.wait(cInfiniteTimeout);
+      std::string* tResponse1 = mRxStringQueue.tryRead();
+      if (tResponse1 == 0) throw 888;
+      Trc::write(1, 0, "executeWaitStop RX    %s", tResponse1->c_str());
+      delete tResponse1;
 
-   // Wait and read the response from the queue and process it.
-   mNotify.wait(cInfiniteTimeout);
-   std::string* tResponse2 = mRxStringQueue.tryRead();
-   if (tResponse2 == 0) throw 888;
-   Trc::write(1, 0, "executeReady RX       %s", tResponse2->c_str());
-   delete tResponse2;
+      // Wait and read the response from the queue and process it.
+      mNotify.wait(cInfiniteTimeout);
+      std::string* tResponse2 = mRxStringQueue.tryRead();
+      if (tResponse2 == 0) throw 888;
+      Trc::write(1, 0, "executeReady RX       %s", tResponse2->c_str());
 
+      // Test the response.
+      int tRet = 0;
+      int tValue = 0;
+      tRet = sscanf(tResponse2->c_str(), "%d", &tValue);
+      if (tRet == 1)
+      {
+         if (tValue == 2)
+         {
+            Prn::print(Prn::Show1, "STOPPED");
+            break;
+         }
+      }
+      delete tResponse2;
+
+      // 
+      // Test for a notification exception.
+      mNotify.testException();
+
+      // Delay.
+      mNotify.waitForTimer(cScriptThrottle);
+
+   }
    // Done.
    Trc::write(1, 0, "executeWaitStop done");
 }
