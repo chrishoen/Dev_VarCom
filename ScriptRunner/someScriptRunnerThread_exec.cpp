@@ -73,7 +73,7 @@ void ScriptRunnerThread::executeEnable(Ris::CmdLineCmd* aCmd)
    flushRxStringQueue();
 
    // Send a request to the motor.
-   std::string* tRequest = new std::string("enable");
+   std::string* tRequest = new std::string("en");
    sendString(tRequest);
 
    // Wait and read the response from the queue and process it.
@@ -199,6 +199,13 @@ void ScriptRunnerThread::executeWaitStop(Ris::CmdLineCmd* aCmd)
    if (tResponse1 == 0) throw 888;
    Trc::write(1, 0, "executeWaitStop RX    %s", tResponse1->c_str());
    delete tResponse1;
+
+   // Wait and read the response from the queue and process it.
+   mNotify.wait(cInfiniteTimeout);
+   std::string* tResponse2 = mRxStringQueue.tryRead();
+   if (tResponse2 == 0) throw 888;
+   Trc::write(1, 0, "executeReady RX       %s", tResponse2->c_str());
+   delete tResponse2;
 
    // Done.
    Trc::write(1, 0, "executeWaitStop done");
