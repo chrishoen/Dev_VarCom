@@ -236,7 +236,7 @@ void ScriptRunnerThread::executeWaitStop(Ris::CmdLineCmd* aCmd)
       mNotify.wait(cInfiniteTimeout);
       std::string* tResponse2 = mRxStringQueue.tryRead();
       if (tResponse2 == 0) throw 888;
-      Trc::write(1, 0, "executeWaitStop2 RX   %s", tResponse1->c_str());
+      Trc::write(1, 0, "executeWaitStop2 RX   %s", tResponse2->c_str());
 
       // Test the response.
       int tRet = 0;
