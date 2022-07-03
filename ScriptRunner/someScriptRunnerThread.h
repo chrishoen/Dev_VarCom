@@ -96,9 +96,6 @@ public:
    //***************************************************************************
    // Members.
 
-   // Notifications.
-   Ris::Threads::NotifyWrapper mRxStringNotify;
-
    // Receive string queue. This is written with a pointer to a string
    // when it is received by the receive string qcall. It is read by the
    // run script qcall.
