@@ -229,14 +229,14 @@ void ScriptRunnerThread::executeWaitStop(Ris::CmdLineCmd* aCmd)
       mNotify.wait(cInfiniteTimeout);
       std::string* tResponse1 = mRxStringQueue.tryRead();
       if (tResponse1 == 0) throw 888;
-      Trc::write(1, 0, "executeWaitStop RX    %s", tResponse1->c_str());
+      Trc::write(1, 0, "executeWaitStop1 RX   %s", tResponse1->c_str());
       delete tResponse1;
 
       // Wait and read the response from the queue and process it.
       mNotify.wait(cInfiniteTimeout);
       std::string* tResponse2 = mRxStringQueue.tryRead();
       if (tResponse2 == 0) throw 888;
-      Trc::write(1, 0, "executeReady RX       %s", tResponse2->c_str());
+      Trc::write(1, 0, "executeWaitStop2 RX   %s", tResponse1->c_str());
 
       // Test the response.
       int tRet = 0;
@@ -246,7 +246,7 @@ void ScriptRunnerThread::executeWaitStop(Ris::CmdLineCmd* aCmd)
       {
          if (tValue == 2)
          {
-            Prn::print(Prn::Show1, "STOPPED");
+            Prn::print(Prn::Show4, "STOPPED");
             break;
          }
       }
@@ -258,7 +258,6 @@ void ScriptRunnerThread::executeWaitStop(Ris::CmdLineCmd* aCmd)
 
       // Delay.
       mNotify.waitForTimer(cScriptThrottle);
-
    }
    // Done.
    Trc::write(1, 0, "executeWaitStop done");
