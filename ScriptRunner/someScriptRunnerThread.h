@@ -64,7 +64,7 @@ public:
    // Wait timeouts.
    static const int cInfiniteTimeout = -1;
    static const int cRxStringTimeout = 1000;
-   static const int cScriptThrottle = 200;
+   static const int cScriptThrottle = 500;
    static const int cDelay1 = 100;
 
    // Notification codes.
